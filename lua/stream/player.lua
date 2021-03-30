@@ -2,8 +2,7 @@
 local _M = {}
 _M._version = "0.0.1"
 
---- @class Player @玩家类
-local mt = { __index = _M } --元表
+local mt = { __index = _M } -- 设置元表方法
 
 --- 创建新玩家
 --- @type number id 
