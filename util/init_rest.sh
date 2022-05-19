@@ -7,8 +7,10 @@ mkdir -p logs conf lua/http
 touch conf/nginx.conf
 cat << 'EOF' > conf/nginx.conf
 worker_processes  1;
+daemon off;
+master_process off;
 
-error_log       logs/error.log info;
+error_log       logs/error.log debug;
 pid             logs/nginx.pid;
 
 events {
