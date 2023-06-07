@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+set -u
+
+yum install yum-utils -y
+yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo
+
+yum install -y openresty openresty-resty openresty-opm
+resty -e 'ngx.say("hello");'
+
+# sudo yum --disablerepo="*" --enablerepo="openresty" list available
+# resty -V 2>&1 | sed 's/--/\n--/g'
+
 #安装依赖库
 opm --cwd get ledgetech/lua-resty-http
 opm --cwd get openresty/lua-resty-redis
