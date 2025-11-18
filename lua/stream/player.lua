@@ -1,12 +1,12 @@
---- @class Player @玩家类
-local _M = {}
-_M._version = "0.0.1"
+---@class Player 玩家
+---@field uuid integer
+---@field logicId integer
+local _M = {
+    _version = "0.0.1"
+}
 
-local mt = { __index = _M } -- 设置元表方法
-
---- 创建新玩家
---- @type number id 
-function _M.new(self)
+---创建新玩家
+function _M.new()
     local obj = {
         uuid = 0,
         gid = 0,
@@ -18,14 +18,14 @@ function _M.new(self)
         loginMod = 0,
         name = "none",
     }
-    return setmetatable(obj, mt)
+    return setmetatable(obj, { __index = _M })
 end
 
-function _M.get_uuid(self)
+function _M:get_uuid()
     return self.uuid
 end
 
-function _M.get_logicId(self)
+function _M:get_logicId()
     return self.logicId
 end
 

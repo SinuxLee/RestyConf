@@ -13,10 +13,14 @@ local crc = require "crc"
 
 local headLen = 12
 
-local _M = {}
-_M._version = "0.0.1"
-_M.headLen = headLen
+local _M = {
+    _version = "0.0.1",
+    headLen = headLen
+}
 
+---comment
+---@param msg table<string,any>
+---@return string
 function _M.encodeMsg(msg)
     local msgPackData = mp.pack(msg)
     local msgLength = string.len(msgPackData)
@@ -40,23 +44,28 @@ function _M.encodeMsg(msg)
     return table.concat(tbl)
 end
 
---- @param buffer data
+---@param data string
+---@return integer|nil bodayLen
+---@return integer|nil crc
+---@return integer|nil time
+---@return integer|nil msgId
+---@return string|nil err
 function _M.decodeMsgHead(data)
     local buffLen = string.len(data)
     if buffLen < headLen then
-        return nil,nil,nil,nil,"not enough"
+        return nil, nil, nil, nil, "not enough"
     end
 
-    local bodayLen,crc,time,msgId = struct.unpack("<HHII",data) -- 小端方式读取
+    local bodayLen, crc, time, msgId = struct.unpack("<HHII", data) -- 小端方式读取
     msgId = msgId / ((time % 10000) + 1)
-    log.info("head: crc, time, id", bodayLen,crc,time,msgId)
+    log.info("head: crc, time, id", bodayLen, crc, time, msgId)
 
-    return bodayLen,crc,time,msgId,nil
+    return bodayLen, crc, time, msgId, nil
 end
 
 function _M.decodeMsgBody(buffer)
     local body = mp.unpack(buffer)
-    log.info("body",body)
+    log.info("body", body)
     return body
 end
 

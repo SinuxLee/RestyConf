@@ -10,7 +10,8 @@ end
 print(string.format("elapsed time : %.2f\n", os.clock() - x));
 
 local ffi = require("ffi")
-ffi.cdef[[
+ffi.cdef [[
 int printf(const char *fmt, ...);
 ]]
+
 ffi.C.printf("Hello %s\n", "world")

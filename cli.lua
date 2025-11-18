@@ -3,7 +3,7 @@ local httpc = require("resty.http").new()
 local cjson = require "cjson"
 
 -- Single-shot requests use the `request_uri` interface.
-local res, err = httpc:request_uri("http://10.0.84.104/anything/haha", {
+local res, err = httpc:request_uri("http://httpbin.org/anything/haha", {
     method = "POST",
     body = "a=1&b=2",
     headers = {
@@ -11,6 +11,7 @@ local res, err = httpc:request_uri("http://10.0.84.104/anything/haha", {
         ["X-QP-AppId"] = "1001",
     },
 })
+
 if not res then
     ngx.say(ngx.ERR, "request failed: ", err)
     return

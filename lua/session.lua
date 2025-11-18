@@ -1,10 +1,7 @@
 local _M = {}
 _M._version = "0.0.1"
 
-local mt = { __index = _M } --元表
-
--- @type number id 
-function _M.new(self)
+function _M.new()
     local obj = {
         uuid = 0,
         gid = 0,
@@ -16,7 +13,7 @@ function _M.new(self)
         loginMod = 0,
 
     }
-    return setmetatable(obj, mt)
+    return setmetatable(obj, { __index = _M })
 end
 
 return _M

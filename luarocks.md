@@ -12,14 +12,14 @@ package ="vanilla"
 version ="0.1.0-1"
 
 source ={
-    url ="git://github.com/idevz/vanilla.git" #必须为可访问的在线库地址
+    url ="git://github.com/idevz/vanilla.git" -- 必须为可访问的在线库地址
 }
 
 description ={
     summary       ="A Lightweight Openresty Web Framework",
     homepage      ="http://idevz.github.io/vanilla",
     maintainer    ="zhoujing<zhoujing00k@gmail.com>",
-    license       ="MIT"                    #必须指明所基于的开源协议
+    license       ="MIT"                    -- 必须指明所基于的开源协议
 }
 
 dependencies ={

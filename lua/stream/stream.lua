@@ -60,22 +60,22 @@ end
 ngx.on_abort(on_sock_abort)
 
 while true do
-    local data,err = sock:receive(codec.headLen) -- 读出就被消耗了，不能二次读取。peek可以查看数据但不消耗
+    local data, err = sock:receive(codec.headLen) -- 读出就被消耗了，不能二次读取。peek可以查看数据但不消耗
     if data == nil then
-        log.info("failed to recv req: ".. err)
-        break
-    end
-    
-    local bodayLen,crc,time,msgId,err = codec.decodeMsgHead(data)
-    if err ~= nil then
-        log.info("failed to decode req: ".. err)
+        log.info("failed to recv req: " .. err)
         break
     end
 
-    local body,err = sock:receive(bodayLen)
+    local bodayLen, crc, time, msgId, err = codec.decodeMsgHead(data)
+    if err ~= nil then
+        log.info("failed to decode req: " .. err)
+        break
+    end
+
+    local body, err = sock:receive(bodayLen)
     body = codec.decodeMsgBody(body)
 
-    local p = cache.get(player.uuid)
+    local p = cache.get(cache, player.uuid)
     local ret = {
         m_msgId = 16,
         m_time = ngx.time(),

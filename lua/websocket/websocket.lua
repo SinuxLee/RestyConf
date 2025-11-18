@@ -5,20 +5,18 @@ local server = require "resty.websocket.server"
 
 local wb, err =
     server:new {
-    timeout = 5000,
-    max_payload_len = 1024 * 64
-}
+        timeout = 5000,
+        max_payload_len = 1024 * 64
+    }
 
 if not wb then
     ngx.log(ngx.ERR, "failed to init websocket: ", err)
     ngx.exit(444)
 end
 
-local data, typ, bytes, err
 
-while true do
-    data, typ, err = wb:recv_frame()
-
+while wb do
+    local data, typ, err = wb:recv_frame()
     if not data then
         if not string.find(err, "timeout", 1, true) then
             ngx.log(ngx.ERR, "failed to recv: ", err)

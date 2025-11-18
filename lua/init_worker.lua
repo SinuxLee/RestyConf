@@ -42,7 +42,7 @@ local initRedis = function(args)
     if value == nil then
         ngx.log(ngx.ERR, err)
     else
-        ngx.log(ngx.INFO, "libz",value)
+        ngx.log(ngx.INFO, "libz", value)
     end
 
     rds:close()
@@ -61,7 +61,7 @@ local function heartbeatCheck(args)
         ngx.log(ngx.INFO, "failed to start timer ", err)
     end
 end
-ngx.timer.every(delayInSeconds,heartbeatCheck)
 
+ngx.timer.every(delayInSeconds, heartbeatCheck)
 ngx.log(ngx.NOTICE, "worker start...")
 heartbeatCheck()

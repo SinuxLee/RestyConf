@@ -1,8 +1,7 @@
 local cjson = require 'cjson'
 
 local log = ngx.log
-
-local emerg =  ngx.EMERG
+local emerg = ngx.EMERG
 local alert = ngx.ALERT
 local crit = ngx.CRIT
 local err = ngx.ERR
@@ -12,51 +11,48 @@ local info = ngx.INFO
 local debug = ngx.DEBUG
 
 --- @class logger
-local _M = {}
+local Logger = {}
 
 ---@vararg string
----@return boolean
-function _M.emerg(...)
+function Logger.emerg(...)
     return log(emerg, ...)
 end
 
-function _M.alert(...)
+function Logger.alert(...)
     return log(alert, ...)
 end
 
-function _M.crit(...)
+function Logger.crit(...)
     return log(crit, ...)
 end
 
-function _M.err(...)
+function Logger.err(...)
     return log(err, ...)
 end
 
-function _M.warn(...)
+function Logger.warn(...)
     return log(warn, ...)
 end
 
-function _M.notice(...)
+function Logger.notice(...)
     return log(notice, ...)
 end
 
 --- @vararg string
---- @return boolean
-function _M.info (...)
-    local arg = {...}
+function Logger.info(...)
+    local arg = { ... }
     for index, value in ipairs(arg) do
         if type(value) == 'table' then
             arg[index] = cjson.encode(value)
         end
     end
-    return log(info, table.concat(arg," "))
+    return log(info, table.concat(arg, " "))
 end
 
-function _M.debug(...)
-    local arg = {...}
-    return log(debug, table.concat(arg," "))
+function Logger.debug(...)
+    local arg = { ... }
+    return log(debug, table.concat(arg, " "))
 end
 
-_M.print = _M.info
-
-return _M
+Logger.print = Logger.info
+return Logger
